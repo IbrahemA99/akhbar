@@ -1,8 +1,9 @@
+import 'package:akhbar/core/constants/app_text.dart';
+import 'package:akhbar/core/utils/utils.dart';
+import 'package:akhbar/features/news/domain/%20entities/articale_entity.dart';
 import 'package:flutter/material.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../../../../core/constants/app_text.dart';
-import '../../../../core/utils/utils.dart';
-import '../../domain/ entities/articale_entity.dart';
+
 
 class DetailsScreen extends StatelessWidget {
 
