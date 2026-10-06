@@ -1,22 +1,20 @@
-import 'package:akhbar/features/news/presentation/cubit/states.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import '../../domain/ entities/news_entity.dart';
-import '../../domain/ entities/source_entity.dart';
-import '../../domain/usecases/get_news_usecase.dart';
-import '../../domain/usecases/get_sources_usecase.dart';
+import 'package:news_forge/features/news/data/models/news_model.dart';
+import 'package:news_forge/features/news/data/models/source_model.dart';
+import 'package:news_forge/features/news/domain/usecases/get_news_usecase.dart';
+import 'package:news_forge/features/news/domain/usecases/get_sources_usecase.dart';
+import 'package:news_forge/features/news/presentation/cubit/states.dart';
 
 class HomeCubit extends Cubit<HomeState> {
   final GetSourcesUseCase getSourcesUseCase;
   final GetNewsUseCase getNewsUseCase;
 
-  SourceEntity? sourceEntity;
-  NewsEntity? newsEntity;
+  SourceModel? sourceModel;
+  NewsModel? newsModel;
 
-  HomeCubit(
-      this.getSourcesUseCase,
-      this.getNewsUseCase,
-      ) : super(HomeInitState());
+  HomeCubit(this.getSourcesUseCase, this.getNewsUseCase)
+    : super(HomeInitState());
 
   static HomeCubit get(BuildContext context) {
     return BlocProvider.of<HomeCubit>(context);
@@ -26,14 +24,12 @@ class HomeCubit extends Cubit<HomeState> {
     emit(GetSourcesLoadingState());
 
     try {
-      sourceEntity = await getSourcesUseCase(categoryId);
+      sourceModel = await getSourcesUseCase(categoryId);
 
       emit(GetSourcesSuccessState());
 
-      if (sourceEntity?.sources?.isNotEmpty ?? false) {
-        await getNews(
-          sourceEntity!.sources![0].id!,
-        );
+      if (sourceModel?.sources?.isNotEmpty ?? false) {
+        await getNews(sourceModel!.sources![0].id!);
       }
     } catch (e) {
       emit(GetSourcesErrorState());
@@ -44,7 +40,19 @@ class HomeCubit extends Cubit<HomeState> {
     emit(GetNewsLoadingState());
 
     try {
-      newsEntity = await getNewsUseCase(sourceId);
+      newsModel = await getNewsUseCase(sourceId);
+
+      emit(GetNewsSuccessState());
+    } catch (e) {
+      emit(GetNewsErrorState(e.toString()));
+    }
+  }
+
+  Future<void> searchNews(String query) async {
+    emit(GetNewsLoadingState());
+
+    try {
+      newsModel = await getNewsUseCase.searchNews(query);
 
       emit(GetNewsSuccessState());
     } catch (e) {

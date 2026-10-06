@@ -1,23 +1,19 @@
-import 'package:akhbar/core/constants/app_text.dart';
-import 'package:akhbar/core/utils/utils.dart';
-import 'package:akhbar/features/news/domain/%20entities/articale_entity.dart';
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
+import 'package:news_forge/core/theme/app_text.dart';
+import 'package:news_forge/core/utils/utils.dart';
+import 'package:news_forge/features/news/data/models/news_model.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-
 class DetailsScreen extends StatelessWidget {
+  final Articles article;
 
-  final ArticleEntity article;
-
-  const DetailsScreen({super.key, required this.article,});
-
+  const DetailsScreen({super.key, required this.article});
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Details"),
-      ),
+      appBar: AppBar(title: Text("Details".tr())),
       body: SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
@@ -28,35 +24,37 @@ class DetailsScreen extends StatelessWidget {
               width: double.infinity,
               fit: BoxFit.cover,
               errorBuilder: (context, error, stackTrace) {
-                return  SizedBox(height: 250,
-                  child: Center(child: Icon(Icons.image_not_supported),),
+                return SizedBox(
+                  height: 250,
+                  child: Center(child: Icon(Icons.image_not_supported)),
                 );
               },
             ),
-            Padding(padding: const EdgeInsets.all(12),
-              child:
-              Column(crossAxisAlignment: CrossAxisAlignment.start,
+            Padding(
+              padding: const EdgeInsets.all(12),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(article.source?.name ??"",
-                    style: AppText.small,),
-                   SizedBox(height: 10),
-                  Text(article.title ?? "",
+                  Text(article.source?.name ?? "".tr(), style: AppText.small),
+                  SizedBox(height: 10),
+                  Text(
+                    article.title ?? "".tr(),
                     style: AppText.headline,
                     maxLines: 2,
-                    overflow: TextOverflow.ellipsis,),
-                   SizedBox(height: 10),
-                  Text(article.description ??"",
-                    style: AppText.body,),
-                   SizedBox(height: 10),
-                  Text(formatDate(article.publishedAt),
-                    style: AppText.small,),
-                   SizedBox(height: 15),
-                  ElevatedButton(onPressed: openArticle,
-                    child:  Text("Read Full Article",),
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                  SizedBox(height: 10),
+                  Text(article.description ?? "".tr(), style: AppText.body),
+                  SizedBox(height: 10),
+                  Text(formatDate(article.publishedAt), style: AppText.small),
+                  SizedBox(height: 15),
+                  ElevatedButton(
+                    onPressed: openArticle,
+                    child: Text("Read Full Article"),
                   ),
                 ],
               ),
-            )
+            ),
           ],
         ),
       ),

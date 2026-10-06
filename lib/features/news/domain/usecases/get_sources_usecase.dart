@@ -1,13 +1,12 @@
-
-import '../ entities/source_entity.dart';
-import '../repositories/home_repo.dart';
+import 'package:news_forge/features/news/data/models/source_model.dart';
+import 'package:news_forge/features/news/domain/repositories/home_repo.dart';
 
 class GetSourcesUseCase {
-  final HomeRepo repo;
+  HomeRepo repo;
 
   GetSourcesUseCase(this.repo);
 
-  Future<SourceEntity> call(String categoryId) {
+  Future<SourceModel> call(String categoryId) {
     return repo.getSources(categoryId);
   }
 }

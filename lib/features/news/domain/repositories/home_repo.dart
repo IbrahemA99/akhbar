@@ -1,8 +1,10 @@
-import 'package:akhbar/features/news/domain/%20entities/news_entity.dart';
-import 'package:akhbar/features/news/domain/%20entities/source_entity.dart';
+import 'package:news_forge/features/news/data/models/news_model.dart';
+import 'package:news_forge/features/news/data/models/source_model.dart';
 
-abstract class HomeRepo{
+abstract class HomeRepo {
+  Future<SourceModel> getSources(String categoryId);
 
-  Future<SourceEntity> getSources(String CategoryId);
-  Future<NewsEntity> getNews(String SourceId );
+  Future<NewsModel> getNews(String sourceId);
+
+  Future<NewsModel> searchNews(String query);
 }

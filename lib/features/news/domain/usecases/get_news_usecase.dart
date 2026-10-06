@@ -1,12 +1,16 @@
-import '../ entities/news_entity.dart';
-import '../repositories/home_repo.dart';
+import 'package:news_forge/features/news/data/models/news_model.dart';
+import 'package:news_forge/features/news/domain/repositories/home_repo.dart';
 
 class GetNewsUseCase {
-  final HomeRepo repo;
+  HomeRepo repo;
 
   GetNewsUseCase(this.repo);
 
-  Future<NewsEntity> call(String sourceId) {
+  Future<NewsModel> call(String sourceId) {
     return repo.getNews(sourceId);
+  }
+
+  Future<NewsModel> searchNews(String query) {
+    return repo.searchNews(query);
   }
 }

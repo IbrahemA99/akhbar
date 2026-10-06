@@ -1,3 +1,4 @@
+import 'package:easy_localization/easy_localization.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import '../cubit/cubit.dart';
@@ -20,12 +21,12 @@ class NewsWidget extends StatelessWidget {
         }
 
         if (state is GetNewsErrorState) {
-          return const Center(
-            child: Text("Something went wrong"),
+          return  Center(
+            child: Text("Something_Went_Wrong".tr()),
           );
         }
 
-        final articles = cubit.newsEntity?.articles ?? [];
+        final articles = cubit.newsModel?.articles ?? [];
 
         return ListView.builder(
           itemBuilder: (context, index) {
